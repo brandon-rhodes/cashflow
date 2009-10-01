@@ -3,7 +3,7 @@
 from collections import defaultdict
 from decimal import Decimal, ROUND_DOWN
 
-one_hundred = Decimal(100) # to avoids creating this thousands of times
+one_hundred = Decimal(100) # to avoid creating this thousands of times
 
 def make_int_dict():
     """A dictionary whose default values are (integer) zero."""

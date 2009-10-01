@@ -2,9 +2,8 @@
 
 These classes are lightweight wrappers around the actual ElementTree
 that holds the data from inside a GnuCash save file.  Typically the user
-simply needs to parse the file and instantiate a Book() around its tree
-object; a convenience function for doing this is defined at the top of
-this package.
+simply needs to parse the ledger XML file and instantiate a Book()
+around its tree object.
 
 """
 from cashflow.oxm import XMLWrapper, XMLChild, XMLChildText, XMLChildren
