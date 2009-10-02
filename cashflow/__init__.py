@@ -3,8 +3,6 @@
 import gzip
 import xml.etree.cElementTree as ET
 from cashflow.book import Book
-from cashflow.analyze import YearlyReport, QuarterlyReport, MonthlyReport
-from cashflow.reports import running_balance, print_running_balance
 
 def open(path):
     """Open a GnuCash file and return a Book object that manages it."""
