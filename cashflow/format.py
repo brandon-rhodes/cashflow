@@ -4,9 +4,16 @@ from collections import defaultdict
 from decimal import Decimal
 
 def format_money(n):
-    """Ledger-format dollar amounts, producing strings like '(5,138.22)'."""
+    """Ledger-format dollar amounts, producing strings like '(5,138.22)'.
+
+    >>> format_money(101)
+    '101.00 '
+    >>> format_money(-9487501.01)
+    '(9,487,501.01)'
+
+    """
     s = '%.02f' % abs(n)
-    for i in range(-6, -len(s), -3):
+    for i in range(len(s) - 6, 0, -3):
         s = s[:i] + ',' + s[i:] # put in thousands commas
     if n < 0:
         return '(%s)' % s
