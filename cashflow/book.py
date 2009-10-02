@@ -6,6 +6,7 @@ simply needs to parse the ledger XML file and instantiate a Book()
 around its tree object.
 
 """
+from decimal import Decimal
 from cashflow.oxm import XMLWrapper, XMLChild, XMLChildText, XMLChildren
 
 # Precompute the names of common GnuCash XML tags.
@@ -34,8 +35,13 @@ split_account = tag('split:account')
 
 class Split(XMLWrapper):
     """A GnuCash split (one of several parts of a transaction)."""
-    value = XMLChildText(split_value)
+    split_value = XMLChildText(split_value)
     account_guid = XMLChildText(split_account)
+
+    def __init__(self, *args, **kw):
+        XMLWrapper.__init__(self, *args, **kw)
+        numerator, denominator = self.split_value.split('/')
+        self.value = Decimal(numerator) / Decimal(denominator)
 
 class Splits(XMLWrapper):
     """A GnuCash splits element."""
