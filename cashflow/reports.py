@@ -33,7 +33,12 @@ def running_balance(splits):
 
     # Finally, build the report, which is a list of table rows
     # represented as tuples of fields, by grouping the tuples by each
-    # concentric level of organization in turn.
+    # concentric level of organization in turn.  Note that a category
+    # prefixed by '!' will, of course, be sorted before categories that
+    # begin with normal alphabetic characters, but that the '!' will be
+    # stripped before its name is displayed; this lets you put Expense
+    # and Income before any other categories.  If there is an '!Income'
+    # category, then a 'Profit/loss' subtotal is displayed next.
 
     rows = []
 
@@ -48,8 +53,11 @@ def running_balance(splits):
                 rows.append((None, None, t3, account))
                 t2 += t3
             rows.append((None, None, '-'))
-            rows.append((None, t2, t2, category + ' for ' + period))
+            rows.append((None, t2, t2, category.strip('!') + ' for ' + period))
             t1 += t2
+            if category == '!Income':
+                rows.append((None, '-'))
+                rows.append((None, t1, '', 'Profit/loss for ' + period))
         rows.append((None, '-'))
         rows.append((t1, t1, '', 'Total for ' + period))
         t += t1
