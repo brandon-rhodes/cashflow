@@ -20,7 +20,8 @@ class deprecated_MonthlyReport(object):
             month = '%d-%02d' % ((y, m+1) if m < 12 else (y+1,1))
             expenses[month][account] -= bump
 
-cash_account_types = set(['BANK', 'CASH', 'CREDIT', 'PAYABLE', 'RECEIVABLE'])
+cash_account_types = set(['Bank', 'Cash', 'Credit', 'Payable', 'Receivable'])
+profitloss_account_types = set(['Expense', 'Income'])
 
 def pull_splits(book, *functions):
     """Return a list of every split in a GnuCash ledger book, post-filters.
@@ -60,8 +61,13 @@ def pull_splits(book, *functions):
             split.category = 'Transactions'
             split.account = accounts[split.account_guid]
             split.account_name = split.account.name
-            split.omit = (split.account.type in cash_account_types)
-            split.category = split.account.type.capitalize()
+
+            atype = split.account.type.capitalize()
+            split.omit = (atype in cash_account_types)
+            if atype in profitloss_account_types:
+                split.category = '!' + atype
+            else:
+                split.category = atype
 
             split.value = - split.value
             if not split.value:
