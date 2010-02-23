@@ -61,13 +61,10 @@ def pull_splits(book, *functions):
             split.account = accounts[split.account_guid]
             split.account_name = split.account.name
             split.omit = (split.account.type in cash_account_types)
+            split.category = split.account.type.capitalize()
 
             split.value = - split.value
-            if split.value > zero:
-                split.category = 'Income'
-            elif split.value < zero:
-                split.category = 'Expenses'
-            else:
+            if not split.value:
                 split.omit = True
 
         # Then, invoke our caller's transforms on each split, and keep
