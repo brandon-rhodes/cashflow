@@ -62,7 +62,7 @@ def running_balance(splits):
         rows.append((t1, t1, '', 'Total for ' + period))
         t += t1
         rows.append(('-'))
-        rows.append((t, '', '', 'Running total after ' + period))
+        rows.append((t, '', '', 'Assets at the close of ' + period))
 
     return rows
 
